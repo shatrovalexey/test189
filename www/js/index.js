@@ -1,31 +1,67 @@
-(({"document": doc,}) => doc.addEventListener("DOMContentLoaded", ({"target": el,}) => {
-	const mazeEl = el.querySelector(".maze");
-	const formEl = el.querySelector(".controls");
-	let scene;
+(({"document": doc}) => {
+    /**
+     * Обработчик события DOMContentLoaded.
+     * Инициализирует игровые элементы и настраивает обработчики событий.
+     * 
+     * @listens DOMContentLoaded
+     * @param {Event} event - Событие загрузки DOM
+     * @param {Document} event.target - Загруженный документ
+     */
+    doc.addEventListener("DOMContentLoaded", ({"target": el}) => {
+        /**
+        * @type {[HTMLElement, HTMLFormElement]}
+        * @property {HTMLElement} mazeEl - DOM-элемент игрового поля (лабиринта)
+        * @property {HTMLFormElement} formEl - DOM-элемент формы управления игрой
+        */
+        const [mazeEl, formEl] = el.querySelectors(".maze", ".controls");
 
-	const playGame = evt => {
-		const {"target": formEl,} = evt;
-		const formData = new FormData(formEl);
+        /**
+        * @type {Scene|null}
+        */
+        let scene;
 
-		/**
-		if (evt?.preventDefault) {
-			evt.preventDefault();
-		}
-		*/
+        /**
+        * @callback playGameCallback
+        * @param {SubmitEvent|CustomEvent} evt - Событие отправки формы или кастомное событие
+        * @returns {void}
+        */
+        const playGame = evt => {
+            // if (evt?.preventDefault) evt.preventDefault();
 
-		scene?.done();
-		scene = new Scene(mazeEl, ... ["height", "width",].map(attr => parseInt(formData.get(attr))));
+            /**
+            * @type {HTMLFormElement}
+            */
+            const {"target": formEl} = evt;
 
-		const maze = new Maze(scene);
+            /**
+            * @type {FormData}
+            */
+            const formData = new FormData(formEl);
 
-		scene.set({
-			"maze": maze
-			, "player": new Player(scene, maze)
-			, "gift": new Gift(scene, maze)
-			,
-		}).execute();
-	};
+            // Завершаем предыдущую игру, если она была
+            scene?.done();
+            scene = new Scene(
+                mazeEl, 
+                ...["height", "width"].map(attr => parseInt(formData.get(attr)))
+            );
 
-	formEl.addEventListener("submit", playGame);
-	// playGame({"target": formEl,});
-}))(window);
+            /**
+            * @type {Maze}
+            */
+            const maze = new Maze(scene);
+
+            scene.set({
+                "maze": maze,
+                "player": new Player(scene, maze),
+                "gift": new Gift(scene, maze),
+            }).execute();
+        };
+
+        /**
+        * @listens submit
+        */
+        formEl.addEventListener("submit", playGame);
+
+        playGame({"target": formEl});
+    });
+})(window);
