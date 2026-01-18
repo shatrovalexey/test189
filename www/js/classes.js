@@ -358,6 +358,7 @@ class Scene
 
     /**
     * Завершает игру, показывая диалог завершения
+    * @returns {Scene} Возвращает this для цепочки вызовов
     */
     finish() {
         setTimeout(() => {
@@ -365,13 +366,18 @@ class Scene
 
             this._getDocument().querySelector(this.el.dataset.finish)?.showModal();
         }, 100);
+
+        return this;
     }
 
     /**
     * Останавливает выполнение игры (очищает интервал)
+    * @returns {Scene} Возвращает this для цепочки вызовов
     */
     done() {
         this._getWindow().clearInterval(this._int);
+
+        return this;
     }
 }
 
