@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<title>Лабиринт</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Expires" content="0">
+		<link rel="stylesheet" href="css/style.css" type="text/css">
+	</head>
+	<body>
+		<div class="overlay">
+			<form action="https://www.tbank.ru/cf/9gQRj6c7Csg" target="_new" class="controls">
+				<fieldset>
+					<legend>габариты</legend>
+
+					<label>
+						<input type="number" name="height" min="5" max="50" value="15" title="строк" required accesskey="r">
+					</label>
+					<span>X</span>
+					<label>
+						<input type="number" name="width" min="5" max="50" value="15" title="столбцов" required accesskey="c">
+					</label>
+					<label>
+						<span>играть</span>
+						<input type="submit" value="&rarr;" accesskey="p">
+					</label>
+				</fieldset>
+				<fieldset class="keyboard">
+					<legend>клавиши</legend>
+					<ul>
+						<li>
+							<kbd>&uarr;</kbd>
+							<span>вверх</span>
+						</li>
+						<li>
+							<kbd>&darr;</kbd>
+							<span>вниз</span>
+						</li>
+						<li>
+							<kbd>&larr;</kbd>
+							<span>вправо</span>
+						</li>
+						<li>
+							<kbd>&rarr;</kbd>
+							<span>влево</span>
+						</li>
+						<li>
+							<kbd>ALT+R</kbd>
+							<span>строк</span>
+						</li>
+						<li>
+							<kbd>ALT+C</kbd>
+							<span>столбцов</span>
+						</li>
+						<li>
+							<kbd>ALT+P</kbd>
+							<span>играть</span>
+						</li>
+					</ul>
+				</fieldset>
+				<fieldset>
+					<legend>очки</legend>
+					<button class="scores"></button>
+				</fieldset>
+			</form>
+			<ul class="maze" data-scores=".scores" data-finish=".finish">
+				<template>
+					<li class="maze-cell"><span></span></li>
+				</template>
+			</ul>
+		</div>
+		<dialog class="finish">
+			<form method="dialog">
+				<fieldset>
+					<legend>конец игры</legend>
+					<input type="submit" value="OK">
+				</fieldset>
+			</form>
+		</dialog>
+	</body>
+</html>
+<script src="js/classes.js"></script>
+<script src="js/proxy.js"></script>
+<script src="js/index.js" defer></script>

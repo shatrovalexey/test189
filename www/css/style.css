@@ -1,0 +1,77 @@
+html, body {
+	height: 95%;
+	font-family: sans-serif;
+}
+.overlay {
+	display: grid;
+	grid-template-columns: 300px 1fr;
+	gap: 2px;
+}
+.finish {
+	text-align: center;
+}
+.scores {
+	display: block;
+	text-align: center;
+	font-size: 200%;
+	font-weight: bold;
+	width: 100%;
+	text-decoration: underline;
+	color: red;
+	cursor: pointer;
+}
+fieldset:has(.scores:empty) {
+	display: none;
+}
+.keyboard ul {
+	padding: 0;
+	list-style-type: none;
+}
+.keyboard ul > li {
+	padding: 5px;
+}
+.keyboard ul > li kbd {
+	display: inline-block;
+	width: 50%;
+}
+.maze {
+	display: grid;
+	grid-template-columns: repeat(15, max-content);
+	grid-template-rows: repeat(15, 1fr);
+	gap: 2px;
+	justify-content: center;
+}
+.maze-cell {
+	list-style-type: none;
+	padding: 5px;
+	font-size: 0;
+	justify-self: center;
+}
+.maze-cell > * {
+	display: inline-block;
+	padding: 5px;
+	margin: 5px;
+	transition-property: background-color;
+	transition-timing-function: ease-in-out;
+	transition-duration: 0.1s;
+	border-radius: 50%;
+}
+.maze-cell[data-gift="true"] > * {
+	outline: 5px yellow dotted;
+	background-color: gold;
+}
+.maze-cell[data-player="true"] > * {
+	background-color: red;
+}
+.maze-cell[data-wall="true"] {
+	background-color: gray;
+}
+.maze-cell[data-wall="false"] {
+	background-color: silver;
+}
+.maze-cell.clone[data-enter="true"] {
+	background-color: red;
+}
+label input[type="submit"] {
+	cursor: pointer;
+}
