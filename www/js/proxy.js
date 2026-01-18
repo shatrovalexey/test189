@@ -1,6 +1,7 @@
 /**
 * Расширяет прототип Node для удаления клонированных дочерних элементов
 * Удаляет все дочерние элементы с псевдоклассом 'clone'
+*
 * @function
 * @name Node.prototype.removeChildrenCloned
 * @returns {undefined}
@@ -12,7 +13,7 @@ Node.prototype.removeChildrenCloned = function() {
 /**
 * Расширяет прототип Node для одновременного поиска нескольких элементов
 * Выполняет несколько поисков через querySelector и возвращает массив результатов
-* 
+*
 * @function
 * @name Node.prototype.querySelectors
 * @param {...string} cssSelectors - Один или несколько CSS-селекторов для поиска элементов
@@ -26,7 +27,7 @@ Node.prototype.querySelectors = function(...cssSelectors) {
 * Расширяет прототип Object для массового установки свойств
 * Позволяет передавать несколько объектов для последовательного копирования свойств
 * Копирует все перечислимые собственные свойства из каждого объекта в текущий объект
-* 
+*
 * @function
 * @name Object.prototype.set
 * @param {...Object} datas - один или несколько объектов, свойства которых будут скопированы
@@ -41,6 +42,7 @@ Object.prototype.set = function(... datas) {
 /**
 * Расширяет прототип Object для сравнения объектов
 * Сравнивает свойства текущего объекта с объектом obj
+*
 * @function
 * @name Object.prototype.equals
 * @param {Object} obj - Объект для сравнения

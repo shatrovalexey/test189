@@ -5,7 +5,7 @@ class Helper
 {
     /**
     * Генерирует случайное булево значение с заданной вероятностью
-    * 
+    *
     * @static
     * @param {number} [prob=0.5] - Вероятность получения true (от 0 до 1)
     * @returns {boolean} Случайное булево значение
@@ -16,7 +16,7 @@ class Helper
 
     /**
     * Создает массив с диапазоном чисел
-    * 
+    *
     * @static
     * @param {number} size - Размер диапазона
     * @returns {number[]} Массив с числами от 0 до size-1
@@ -27,7 +27,7 @@ class Helper
 
     /**
     * Создает итератор с диапазоном чисел
-    * 
+    *
     * @static
     * @param {number} size - Размер диапазона
     * @returns {IterableIterator<number>} Итератор с числами
@@ -43,7 +43,7 @@ class Helper
 class GameElement {
     /**
     * Конструктор класса GameElement
-    * 
+    *
     * @param {Object} scene - Объект сцены
     * @param {Maze} maze - Объект лабиринта
     */
@@ -53,7 +53,7 @@ class GameElement {
 
     /**
     * Обновляет позицию элемента в случайной ячейке лабиринта
-    * 
+    *
     * @returns {GameElement} Текущий экземпляр для цепочки вызовов
     */
     refresh() {
@@ -62,7 +62,7 @@ class GameElement {
 
     /**
     * Подготавливает элемент к использованию
-    * 
+    *
     * @returns {GameElement} Текущий экземпляр для цепочки вызовов
     */
     _prepare() {
@@ -71,7 +71,7 @@ class GameElement {
 
     /**
     * Размещает элемент в указанной ячейке
-    * 
+    *
     * @param {Cell} cell - Ячейка лабиринта
     * @returns {GameElement} Текущий экземпляр для цепочки вызовов
     */
@@ -83,7 +83,7 @@ class GameElement {
 
     /**
     * Перемещает элемент в указанную позицию
-    * 
+    *
     * @param {number} y - Координата Y
     * @param {number} x - Координата X
     * @returns {boolean} true если перемещение успешно, false если нет
@@ -98,7 +98,7 @@ class GameElement {
 
     /**
     * Публичный метод для перемещения в указанную позицию
-    * 
+    *
     * @param {number} y - Координата Y
     * @param {number} x - Координата X
     * @returns {boolean} Результат перемещения
@@ -109,7 +109,7 @@ class GameElement {
 
     /**
     * Перемещает элемент относительно текущей позиции
-    * 
+    *
     * @param {number} y - Смещение по Y
     * @param {number} x - Смещение по X
     * @returns {boolean} Результат перемещения
@@ -120,7 +120,7 @@ class GameElement {
 
     /**
     * Устанавливает атрибут для ячейки
-    * 
+    *
     * @param {Cell} cell - Ячейка лабиринта
     * @param {boolean} [bool=true] - Значение атрибута
     * @param {string} [attr=null] - Имя атрибута
@@ -141,7 +141,7 @@ class GameElement {
 class Gift extends GameElement {
     /**
     * Переопределяет метод установки ячейки для подарка
-    * 
+    *
     * @param {Cell} cell - Ячейка лабиринта
     * @param {boolean} [bool=true] - Значение атрибута
     * @param {string} [attr="gift"] - Имя атрибута (по умолчанию "gift")
@@ -154,7 +154,7 @@ class Gift extends GameElement {
 
     /**
     * Обновляет позицию подарка, избегая совпадения с позицией игрока
-    * 
+    *
     * @returns {Gift} Текущий экземпляр
     */
     refresh() {
@@ -172,7 +172,7 @@ class Gift extends GameElement {
 class Player extends GameElement {
     /**
     * Переопределяет метод установки ячейки для игрока
-    * 
+    *
     * @param {Cell} cell - Ячейка лабиринта
     * @param {boolean} [bool=true] - Значение атрибута
     * @param {string} [attr="player"] - Имя атрибута (по умолчанию "player")
