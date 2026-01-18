@@ -182,13 +182,15 @@ class Player extends GameElement {
     */
     _setCell(cell, bool = true, attr = "player", except = ["wall"]) {
         if (this.scene.gift?.cell?.equals(cell)) {
-            // Если игрок попал на ячейку с подарком
+            // если игрок попал на ячейку с подарком
             this.scene.crashed ++;
             this.scene.scores += this.scene.prize;
             this.scene.gift.refresh();
         }
-        else if (this.scene.scores <= 0) this.scene.finish(); // Если очки закончились
-        else if (this.scene.scores > 0) -- this.scene.scores; // Уменьшаем счетчик очков
+        else if (this.scene.scores <= 0) // если горючка закончилась
+            this.scene.finish();
+        else if (this.scene.scores > 0) // если горючка ещё есть
+            -- this.scene.scores;
 
         return super._setCell(cell, bool, attr, except);
     }
@@ -205,10 +207,12 @@ class Scene
     * конструктор
     * @constructor
     * @param {HTMLElement} el - DOM-элемент, представляющий игровое поле
-    * @param {number} sizeY - Высота игрового поля в клетках
-    * @param {number} sizeX - Ширина игрового поля в клетках
+    * @param {number} sizeY - высота игрового поля в клетках
+    * @param {number} sizeX - ширина игрового поля в клетках
+    * @param {number} [creashed=0] - сколько подбито
+    * @param {number} [intv=100] - интервал обнновления
     */
-    constructor(el, sizeY, sizeX) {
+    constructor(el, sizeY, sizeX, crashed = 0, intv = 100) {
         const square = sizeY * sizeX;
 
         this.set({
@@ -216,7 +220,8 @@ class Scene
             , "sizeY": sizeY
             , "sizeX": sizeX
             , "scores": square
-            , "crashed": 0
+            , "crashed": crashed
+            , "intv": intv
             , "prize": Math.floor(Math.sqrt(square))
             ,
         })._prepare();
@@ -250,7 +255,6 @@ class Scene
     /**
     * нажатия клавиш для управления игроком
     *
-    * @protected
     * @param {KeyboardEvent} evt - Событие клавиатуры
     * @param {Object} [keys={
     *   "arrowup": [-1, 0],
@@ -260,7 +264,7 @@ class Scene
     * }] - соответствие клавиш изменениям координат [deltaY, deltaX]
     * @returns {Scene}
     */
-    _handleKeys(evt, keys = {
+    handleKeys(evt, keys = {
         "arrowup": [-1, 0,]
         , "arrowdown": [1, 0,]
         , "arrowleft": [0, -1,]
@@ -269,7 +273,7 @@ class Scene
     }) {
         const key = evt.key.toLowerCase();
 
-        if (!(key in keys)) return;
+        if (!(key in keys)) return this;
 
         evt.preventDefault();
 
@@ -279,12 +283,11 @@ class Scene
     }
 
     /**
-    * подготавливает игровое поле: настраивает сетку и создает клетки
-    *
+    * начальная подготовка сцены
     * @protected
     * @returns {Scene}
     */
-    _prepareDesk() {
+    _prepare() {
         this.el.style.set({
             "gridTemplateColumns": `repeat(${this.sizeX}, max-content)`
             , "gridTemplateRows": `repeat(${this.sizeY}, 1fr)`
@@ -308,28 +311,6 @@ class Scene
     }
 
     /**
-    * обработчики событий для сцены
-    *
-    * @protected
-    * @returns {Scene}
-    */
-    _prepareEvents() {
-        this._getWindow()
-            .addEventListener("keydown", evt => this._handleKeys(evt));
-
-        return this;
-    }
-
-    /**
-    * начальная подготовка сцены
-    * @protected
-    * @returns {Scene}
-    */
-    _prepare() {
-        return this._prepareDesk()._prepareEvents();
-    }
-
-    /**
     * перерисовывает игровое поле на основе текущего состояния
     *
     * @protected
@@ -349,15 +330,11 @@ class Scene
     /**
     * запускает выполнение игры с периодической перерисовкой
     *
-    * @param {Object} data - Данные для инициализации игры
     * @param {number} [intv=100] - Интервал перерисовки в миллисекундах
     * @returns {number} Идентификатор интервала (interval ID)
     */
-    execute(data, intv = 100) {
-        return this._int = this
-            .set(data)
-            ._getWindow()
-            .setInterval(() => this._redraw(), intv);
+    execute() {
+        return this._int ||= this._getWindow().setInterval(() => this._redraw(), this.intv);
     }
 
     /**
@@ -366,12 +343,9 @@ class Scene
     * @returns {Scene}
     */
     finish() {
-        setTimeout(
-            () => this.done()._getDocument()
-                .querySelector(this.el.dataset.finish)
-                ?.showModal()
-            , 100
-        );
+        const sub = () => this.done()._getDocument().querySelector(this.el.dataset.finish)?.showModal();
+
+        this._getWindow().setTimeout(sub, this.intv);
 
         return this;
     }
