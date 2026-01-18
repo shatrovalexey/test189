@@ -1,68 +1,75 @@
 html, body {
-	height: 95%;
-	font-family: sans-serif;
+    height: 95%;
+    font-family: sans-serif;
 }
 .overlay {
-	display: grid;
-	grid-template-columns: 300px 1fr;
-	gap: 2px;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2px;
 }
 .finish {
-	text-align: center;
+    text-align: center;
 }
-.scores {
-	display: block;
-	text-align: center;
-	font-size: 200%;
-	font-weight: bold;
-	width: 100%;
-	text-decoration: underline;
-	color: red;
-	cursor: pointer;
+.values {
+    padding: 0;
+    list-style-type: none;
+}
+.values > * {
+    padding: 5px;
+}
+.scores, .crashed {
+    display: block;
+    text-align: center;
+    font-size: 200%;
+    font-weight: bold;
+    width: 100%;
+    text-decoration: underline;
+    color: red;
+    cursor: pointer;
 }
 fieldset:has(.scores:empty) {
-	display: none;
+    display: none;
 }
 .keyboard ul {
-	padding: 0;
-	list-style-type: none;
+    padding: 0;
+    list-style-type: none;
 }
 .keyboard ul > li {
-	padding: 5px;
+    padding: 5px;
 }
 .keyboard ul > li kbd {
-	display: inline-block;
-	width: 50%;
+    display: inline-block;
+    width: 50%;
 }
 .maze {
-	display: grid;
-	grid-template-columns: repeat(15, max-content);
-	grid-template-rows: repeat(15, 1fr);
-	gap: 0;
-	justify-content: center;
-	background-color: black;
-	border: 5px silver double;
-	padding: 2%;
-	margin: 0;
+    display: grid;
+    grid-template-columns: repeat(15, max-content);
+    grid-template-rows: repeat(15, 1fr);
+    gap: 0;
+    justify-content: center;
+    background-color: black;
+    border: 10px silver solid;
+    padding: 2%;
+    margin: 0;
 }
 .maze-cell {
-	list-style-type: none;
-	padding: 5px;
-	font-size: 0;
-	justify-self: center;
+    list-style-type: none;
+    padding: 5px;
+    font-size: 0;
+    justify-self: center;
 }
 .maze-cell > * {
-	display: inline-block;
-	padding: 5px;
-	margin: 5px;
-	transition-property: background-color;
-	transition-timing-function: ease-in-out;
-	transition-duration: 0.1s;
-	border-radius: 50%;
+    display: inline-block;
+    padding: 5px;
+    margin: 5px;
+    transition-property: background-color;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.1s;
+    border-radius: 50%;
 }
 .maze-cell[data-player="true"]
 , .maze-cell[data-gift="true"] {
-	width: 100%;
+    width: 100%;
 }
 .maze-cell[data-player="true"] > *
 , .maze-cell[data-gift="true"] > * {
@@ -70,29 +77,29 @@ fieldset:has(.scores:empty) {
     zoom: 200%;
     margin-left: -0.1%;
     margin-top: -0.1%;
-	outline-width: 5px;
+    outline-width: 5px;
 }
 .maze-cell[data-gift="true"] > * {
-	background-color: #008cff;
-	box-shadow: 0 0 10px 4px red;
-	outline-color: yellow;
-	outline-style: dotted;
+    background-color: #008cff;
+    box-shadow: 0 0 10px 4px red;
+    outline-color: yellow;
+    outline-style: dotted;
 }
 .maze-cell[data-player="true"] > * {
-	background-color: white;
-	box-shadow: 0 0 10px 4px #00ff05;
-	outline-color: red;
-	outline-style: dashed;
+    background-color: white;
+    box-shadow: 0 0 10px 4px #00ff05;
+    outline-color: red;
+    outline-style: dashed;
 }
 .maze-cell[data-wall="true"] {
-	background-color: black;
+    background-color: black;
 }
 .maze-cell[data-wall="false"] {
-	background-color: silver;
+    background-color: silver;
 }
 .maze-cell.clone[data-enter="true"] {
-	background-color: red;
+    background-color: red;
 }
 label input[type="submit"] {
-	cursor: pointer;
+    cursor: pointer;
 }

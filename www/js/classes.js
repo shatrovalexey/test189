@@ -182,6 +182,7 @@ class Player extends GameElement {
     _setCell(cell, bool = true, attr = "player", except = ["wall"]) {
         if (this.scene.gift?.cell?.equals(cell)) {
             // Если игрок попал на ячейку с подарком
+            this.scene.crashed ++;
             this.scene.scores += this.scene.prize;
             this.scene.gift.refresh();
         } else if (this.scene.scores <= 0) {
@@ -218,6 +219,7 @@ class Scene
             , "sizeY": sizeY
             , "sizeX": sizeX
             , "scores": square
+            , "crashed": 0
             , "prize": Math.floor(Math.sqrt(square))
             ,
         })._prepare();
@@ -332,9 +334,11 @@ class Scene
     */
     _redraw() {
         const cells = this.maze.getCells();
+        const doc = this._getDocument();
 
         this.nodes.forEach(node => node.dataset.set(cells.shift()));
-        this._getDocument().querySelector(this.el.dataset.scores).textContent = this.scores;
+        ["scores", "crashed",]
+            .forEach(key => doc.querySelector(this.el.dataset[key]).textContent = this[key]);
 
         return this;
     }

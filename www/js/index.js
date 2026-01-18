@@ -1,11 +1,11 @@
 (({"document": doc}) => {
     /**
-	* Обработчик события DOMContentLoaded.
-	*
-	* @listens DOMContentLoaded
-	* @param {Event} event - Событие загрузки DOM
-	* @param {Document} event.target - Загруженный документ
-	*/
+    * Обработчик события DOMContentLoaded.
+    *
+    * @listens DOMContentLoaded
+    * @param {Event} event - Событие загрузки DOM
+    * @param {Document} event.target - Загруженный документ
+    */
     doc.addEventListener("DOMContentLoaded", ({"target": el}) => {
         /**
         * @type {[HTMLElement, HTMLFormElement]}

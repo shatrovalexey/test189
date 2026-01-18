@@ -29,7 +29,20 @@
                 </fieldset>
                 <fieldset>
                     <legend>очки</legend>
-                    <button class="scores"></button>
+                    <ul class="values">
+                        <li>
+                            <label>
+                                <span>горючка</span>
+                                <button class="scores"></button>
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <span>сбито</span>
+                                <button class="crashed"></button>
+                            </label>
+                        </li>
+                    </ul>
                 </fieldset>
                 <fieldset class="keyboard">
                     <legend>клавиши</legend>
@@ -65,7 +78,7 @@
                     </ul>
                 </fieldset>
             </form>
-            <ul class="maze" data-scores=".scores" data-finish=".finish">
+            <ul class="maze" data-scores=".scores" data-crashed=".crashed" data-finish=".finish">
                 <template>
                     <li class="maze-cell"><span></span></li>
                 </template>
