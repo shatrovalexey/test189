@@ -38,8 +38,12 @@ fieldset:has(.scores:empty) {
 	display: grid;
 	grid-template-columns: repeat(15, max-content);
 	grid-template-rows: repeat(15, 1fr);
-	gap: 2px;
+	gap: 0;
 	justify-content: center;
+	background-color: black;
+	border: 5px silver double;
+	padding: 2%;
+	margin: 0;
 }
 .maze-cell {
 	list-style-type: none;
@@ -56,15 +60,32 @@ fieldset:has(.scores:empty) {
 	transition-duration: 0.1s;
 	border-radius: 50%;
 }
+.maze-cell[data-player="true"]
+, .maze-cell[data-gift="true"] {
+	width: 100%;
+}
+.maze-cell[data-player="true"] > *
+, .maze-cell[data-gift="true"] > * {
+    position: absolute;
+    zoom: 200%;
+    margin-left: -0.1%;
+    margin-top: -0.1%;
+	outline-width: 5px;
+}
 .maze-cell[data-gift="true"] > * {
-	outline: 5px yellow dotted;
-	background-color: gold;
+	background-color: #008cff;
+	box-shadow: 0 0 10px 4px red;
+	outline-color: yellow;
+	outline-style: dotted;
 }
 .maze-cell[data-player="true"] > * {
-	background-color: red;
+	background-color: white;
+	box-shadow: 0 0 10px 4px #00ff05;
+	outline-color: red;
+	outline-style: dashed;
 }
 .maze-cell[data-wall="true"] {
-	background-color: gray;
+	background-color: black;
 }
 .maze-cell[data-wall="false"] {
 	background-color: silver;
