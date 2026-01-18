@@ -39,7 +39,7 @@
             */
             const {"target": formEl} = evt;
 
-            if (evt?.preventDefault) evt.preventDefault();
+            // if (evt?.preventDefault) evt.preventDefault();
 
             /**
             * @type {FormData}
