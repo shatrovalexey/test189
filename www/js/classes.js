@@ -567,15 +567,13 @@ class Maze
     */
     _getRemoveWall(chunks) {
         const self = this;
-        const result = chunks.map(chunk => {
-            return chunk
-                .filter(cell => cell.border.length)
-                .map(cell => {
-                    return cell.border
-                        .filter(() => Helper.getRand())
-                        .map(border => border.wall = false);
-                });
-        });
+        const result = chunks.map(chunk => chunk
+            .filter(cell => cell.border.length)
+            .map(cell => {
+                return cell.border
+                    .filter(() => Helper.getRand())
+                    .map(border => border.wall = false);
+            }));
 
         result.flat().forEach(cell => delete cell.border);
 
