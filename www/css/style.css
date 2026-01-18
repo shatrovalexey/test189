@@ -85,8 +85,8 @@ fieldset:has(.scores:empty) {
     box-shadow: 0 0 10px 4px red;
     outline-color: yellow;
     outline-style: dotted;
-	animation-direction: reverse;
-	animation-duration: 18s;
+    animation-direction: reverse;
+    animation-duration: 18s;
 }
 .maze-cell[data-player="true"] > * {
     background-color: white;
@@ -107,19 +107,19 @@ label input[type="submit"] {
     cursor: pointer;
 }
 @keyframes spin {
-	from {
-		transform: rotate(0);
-		margin-top: 0;
-		margin-left: 5px;
-	}
-	50% {
-		transform: rotate(360deg);
-		margin-top: 5px;
-		margin-left: 0;
-	}
-	to {
-		transform: rotate(1deg);
-		margin-top: 1px;
-		margin-left: 4px;
-	}
+    from {
+        transform: rotate(0);
+        margin-top: 0;
+        margin-left: 5px;
+    }
+    50% {
+        transform: rotate(360deg);
+        margin-top: 5px;
+        margin-left: 0;
+    }
+    to {
+        transform: rotate(1deg);
+        margin-top: 1px;
+        margin-left: 4px;
+    }
 }
