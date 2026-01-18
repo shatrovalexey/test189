@@ -1,6 +1,5 @@
 /**
-* Расширяет прототип Node для удаления клонированных дочерних элементов
-* Удаляет все дочерние элементы с псевдоклассом 'clone'
+* удаляет все дочерние элементы с псевдоклассом 'clone'
 *
 * @function
 * @name Node.prototype.removeChildrenCloned
@@ -11,27 +10,24 @@ Node.prototype.removeChildrenCloned = function() {
 };
 
 /**
-* Расширяет прототип Node для одновременного поиска нескольких элементов
-* Выполняет несколько поисков через querySelector и возвращает массив результатов
+* несколько поисков через querySelector и возвращает массив результатов
 *
 * @function
 * @name Node.prototype.querySelectors
-* @param {...string} cssSelectors - Один или несколько CSS-селекторов для поиска элементов
-* @returns {Array<Element|null>} Массив найденных элементов (null для не найденных)
+* @param {...string} cssSelectors - CSS-селекторы для поиска элементов
+* @returns {Array<Element|null>} найденные элементы
 */
 Node.prototype.querySelectors = function(...cssSelectors) {
     return cssSelectors.map(cssSelector => this.querySelector(cssSelector));
 };
 
 /**
-* Расширяет прототип Object для массового установки свойств
-* Позволяет передавать несколько объектов для последовательного копирования свойств
-* Копирует все перечислимые собственные свойства из каждого объекта в текущий объект
+* последовательное копирование свойств из списка объектов
 *
 * @function
 * @name Object.prototype.set
 * @param {...Object} datas - один или несколько объектов, свойства которых будут скопированы
-* @returns {Object} текущий объект (для цепочки вызовов)
+* @returns {Object}
 */
 Object.prototype.set = function(... datas) {
     Object.assign(this, ... datas);
@@ -40,12 +36,11 @@ Object.prototype.set = function(... datas) {
 };
 
 /**
-* Расширяет прототип Object для сравнения объектов
-* Сравнивает свойства текущего объекта с объектом obj
+* сравнение объектов по атрибутам
 *
 * @function
 * @name Object.prototype.equals
-* @param {Object} obj - Объект для сравнения
+* @param {Object} obj - объект для сравнения
 * @returns {boolean} true, если все соответствующие свойства равны по значению (===)
 */
 Object.prototype.equals = function(obj) {

@@ -1,36 +1,37 @@
 /**
-* Класс вспомогательных методов
+* Вспомогательные методы
+* @class
 */
 class Helper
 {
     /**
-    * Генерирует случайное булево значение с заданной вероятностью
+    * случайное булево значение с заданной вероятностью
     *
     * @static
-    * @param {number} [prob=0.5] - Вероятность получения true (от 0 до 1)
-    * @returns {boolean} Случайное булево значение
+    * @param {number} [prob=0.5] - вероятность
+    * @returns {boolean} значение
     */
     static getRand(prob = 0.5) {
         return Math.random() > prob;
     }
 
     /**
-    * Создает массив с диапазоном чисел
+    * массив с диапазоном чисел
     *
     * @static
-    * @param {number} size - Размер диапазона
-    * @returns {number[]} Массив с числами от 0 до size-1
+    * @param {number} size - размер диапазона
+    * @returns {number[]} массив с числами от 0 до size-1
     */
     static getRange(size) {
         return [... this.getRangeX(size)];
     }
 
     /**
-    * Создает итератор с диапазоном чисел
+    * итератор с диапазоном чисел
     *
     * @static
-    * @param {number} size - Размер диапазона
-    * @returns {IterableIterator<number>} Итератор с числами
+    * @param {number} size - размер диапазона
+    * @returns {IterableIterator<number>}
     */
     static getRangeX(size) {
         return Array(size).keys();
@@ -38,42 +39,42 @@ class Helper
 }
 
 /**
-* Базовый класс для игровых элементов, взаимодействующих с лабиринтом
+* базовый класс для игровых элементов
 */
 class GameElement {
     /**
-    * Конструктор класса GameElement
+    * конструктор
     *
-    * @param {Object} scene - Объект сцены
-    * @param {Maze} maze - Объект лабиринта
+    * @param {Object} scene - сцена
+    * @param {Maze} maze - лабиринт
     */
     constructor(scene, maze) {
         this.set({"scene": scene, "maze": maze})._prepare().refresh();
     }
 
     /**
-    * Обновляет позицию элемента в случайной ячейке лабиринта
+    * обновляет позицию элемента в случайной ячейке коридора лабиринта
     *
-    * @returns {GameElement} Текущий экземпляр для цепочки вызовов
+    * @returns {GameElement}
     */
     refresh() {
         return this._place(this.maze.getHallRandom());
     }
 
     /**
-    * Подготавливает элемент к использованию
-    *
-    * @returns {GameElement} Текущий экземпляр для цепочки вызовов
+    * подготавливает элемент к использованию
+    * @protected
+    * @returns {GameElement}
     */
     _prepare() {
         return this;
     }
 
     /**
-    * Размещает элемент в указанной ячейке
-    *
-    * @param {Cell} cell - Ячейка лабиринта
-    * @returns {GameElement} Текущий экземпляр для цепочки вызовов
+    * размещает элемент в указанной ячейке
+    * @protected
+    * @param {Cell} cell - ячейка лабиринта
+    * @returns {GameElement}
     */
     _place(cell) {
         return this
@@ -82,25 +83,23 @@ class GameElement {
     }
 
     /**
-    * Перемещает элемент в указанную позицию
-    *
-    * @param {number} y - Координата Y
-    * @param {number} x - Координата X
-    * @returns {boolean} true если перемещение успешно, false если нет
+    * перемещает элемент в указанную позицию
+    * @protected
+    * @param {number} y
+    * @param {number} x
+    * @returns {boolean}
     */
     _move(y, x) {
         const cell = this.maze.getCell(y, x);
-
-        if (!cell || cell.wall) return false;
 
         return cell && !cell.wall && this._place(cell);
     }
 
     /**
-    * Публичный метод для перемещения в указанную позицию
+    * метод для перемещения в указанную позицию
     *
-    * @param {number} y - Координата Y
-    * @param {number} x - Координата X
+    * @param {number} y - Y
+    * @param {number} x - X
     * @returns {boolean} Результат перемещения
     */
     moveTo(y, x) {
@@ -108,54 +107,55 @@ class GameElement {
     }
 
     /**
-    * Перемещает элемент относительно текущей позиции
+    * перемещает элемент относительно текущей позиции
     *
-    * @param {number} y - Смещение по Y
-    * @param {number} x - Смещение по X
-    * @returns {boolean} Результат перемещения
+    * @param {number} y - смещение по Y
+    * @param {number} x - смещение по X
+    * @returns {boolean}
     */
     moveBy(y, x) {
         return this._move(this.cell.y + y, this.cell.x + x);
     }
 
     /**
-    * Устанавливает атрибут для ячейки
+    * устанавливает атрибут для ячейки
     *
-    * @param {Cell} cell - Ячейка лабиринта
-    * @param {boolean} [bool=true] - Значение атрибута
-    * @param {string} [attr=null] - Имя атрибута
-    * @param {string[]} [except=[]] - Массив исключаемых ключей
-    * @returns {GameElement} Текущий экземпляр для цепочки вызовов
+    * @protected
+    * @param {Cell} cell - ячейка лабиринта
+    * @param {boolean} [bool=true] - значение атрибута
+    * @param {string} [attr=null] - имя атрибута
+    * @param {string[]} [except=[]] - массив исключаемых ключей
+    * @returns {GameElement}
     */
     _setCell(cell, bool = true, attr = null, except = []) {
-        if (attr && cell && except.every(key => !cell[key])) {
-            cell[attr] = bool;
-        }
+        if (attr && cell && except.every(key => !cell[key])) cell[attr] = bool;
+
         return this;
     }
 }
 
 /**
-* Класс Gift представляет собой игровой элемент-подарок, наследующий функциональность от GameElement
+* элемент-подарок
 */
 class Gift extends GameElement {
     /**
-    * Переопределяет метод установки ячейки для подарка
+    * установка ячейки для подарка
     *
-    * @param {Cell} cell - Ячейка лабиринта
-    * @param {boolean} [bool=true] - Значение атрибута
-    * @param {string} [attr="gift"] - Имя атрибута (по умолчанию "gift")
-    * @param {string[]} [except=["wall", "player"]] - Массив исключаемых ключей
-    * @returns {Gift} Текущий экземпляр для цепочки вызовов
+    * @protected
+    * @param {Cell} cell - ячейка коридора лабиринта
+    * @param {boolean} [bool=true] - значение атрибута
+    * @param {string} [attr="gift"] - имя атрибута
+    * @param {string[]} [except=["wall", "player"]] - массив исключаемых ключей
+    * @returns {Gift}
     */
     _setCell(cell, bool = true, attr = "gift", except = ["wall", "player"]) {
         return super._setCell(cell, bool, attr, except);
     }
 
     /**
-    * Обновляет позицию подарка, избегая совпадения с позицией игрока
+    * обновляет позицию подарка, избегая совпадения с позицией игрока
     *
-    * @returns {Gift} Текущий экземпляр
+    * @returns {Gift}
     */
     refresh() {
         do {
@@ -167,17 +167,18 @@ class Gift extends GameElement {
 }
 
 /**
-* Класс Player представляет собой игрового персонажа, наследующий функциональность от GameElement
+* игровой персонаж
 */
 class Player extends GameElement {
     /**
-    * Переопределяет метод установки ячейки для игрока
+    * метод установки ячейки для игрока
     *
-    * @param {Cell} cell - Ячейка лабиринта
-    * @param {boolean} [bool=true] - Значение атрибута
-    * @param {string} [attr="player"] - Имя атрибута (по умолчанию "player")
-    * @param {string[]} [except=["wall"]] - Массив исключаемых ключей
-    * @returns {Player} Текущий экземпляр для цепочки вызовов
+    * @protected
+    * @param {Cell} cell - ячейка коридора лабиринта
+    * @param {boolean} [bool=true] - значение атрибута
+    * @param {string} [attr="player"] - имя атрибута
+    * @param {string[]} [except=["wall"]] - массив исключаемых ключей
+    * @returns {Player}
     */
     _setCell(cell, bool = true, attr = "player", except = ["wall"]) {
         if (this.scene.gift?.cell?.equals(cell)) {
@@ -185,27 +186,23 @@ class Player extends GameElement {
             this.scene.crashed ++;
             this.scene.scores += this.scene.prize;
             this.scene.gift.refresh();
-        } else if (this.scene.scores <= 0) {
-            // Если очки закончились
-            this.scene.finish();
-        } else if (this.scene.scores > 0) {
-            // Уменьшаем счетчик очков
-            --this.scene.scores;
         }
+        else if (this.scene.scores <= 0) this.scene.finish(); // Если очки закончились
+        else if (this.scene.scores > 0) -- this.scene.scores; // Уменьшаем счетчик очков
 
         return super._setCell(cell, bool, attr, except);
     }
 }
 
 /**
-* Класс, представляющий игровую сцену/поле
-* Управляет отрисовкой игрового поля, обработкой событий и игровой логикой
+* игровая сцена
+* управляет отрисовкой игрового поля, обработкой событий и игровой логикой
 * @class
 */
 class Scene
 {
     /**
-    * Создает экземпляр игровой сцены
+    * конструктор
     * @constructor
     * @param {HTMLElement} el - DOM-элемент, представляющий игровое поле
     * @param {number} sizeY - Высота игрового поля в клетках
@@ -226,9 +223,10 @@ class Scene
     }
 
     /**
-    * Получает документ, связанный с указанным или текущим элементом
+    * объект документа, связанный с указанным или текущим элементом
+    *
     * @protected
-    * @param {HTMLElement|null} [el=null] - Элемент, для которого нужно получить документ
+    * @param {HTMLElement|null} [el=null] - элемент
     * @returns {Document} Объект документа
     */
     _getDocument(el = null) {
@@ -236,11 +234,12 @@ class Scene
     }
 
     /**
-    * Получает объект окна, связанный с документом
+    * объект окна, связанный с указанным или текущим элементом
+    *
     * @protected
-    * @param {HTMLElement|null} [el=null] - Элемент для получения документа
-    * @param {Array<string>} [where=["parentWindow", "defaultView"]] - Атрибуты для поиска окна
-    * @returns {Window} Объект окна
+    * @param {HTMLElement|null} [el=null] - элемент
+    * @param {Array<string>} [where=["parentWindow", "defaultView"]] - атрибуты для поиска окна
+    * @returns {Window} объект окна
     */
     _getWindow(el = null, where = ["parentWindow", "defaultView",]) {
         const doc = this._getDocument(el);
@@ -249,7 +248,8 @@ class Scene
     }
 
     /**
-    * Обрабатывает нажатия клавиш для управления игроком
+    * нажатия клавиш для управления игроком
+    *
     * @protected
     * @param {KeyboardEvent} evt - Событие клавиатуры
     * @param {Object} [keys={
@@ -257,8 +257,8 @@ class Scene
     *   "arrowdown": [1, 0],
     *   "arrowleft": [0, -1],
     *   "arrowright": [0, 1]
-    * }] - Соответствие клавиш изменениям координат [deltaY, deltaX]
-    * @returns {Scene} Возвращает this для цепочки вызовов
+    * }] - соответствие клавиш изменениям координат [deltaY, deltaX]
+    * @returns {Scene}
     */
     _handleKeys(evt, keys = {
         "arrowup": [-1, 0,]
@@ -279,9 +279,10 @@ class Scene
     }
 
     /**
-    * Подготавливает игровое поле: настраивает сетку и создает клетки
+    * подготавливает игровое поле: настраивает сетку и создает клетки
+    *
     * @protected
-    * @returns {Scene} Возвращает this для цепочки вызовов
+    * @returns {Scene}
     */
     _prepareDesk() {
         this.el.style.set({
@@ -307,9 +308,10 @@ class Scene
     }
 
     /**
-    * Настраивает обработчики событий для сцены
+    * обработчики событий для сцены
+    *
     * @protected
-    * @returns {Scene} Возвращает this для цепочки вызовов
+    * @returns {Scene}
     */
     _prepareEvents() {
         this._getWindow()
@@ -319,18 +321,19 @@ class Scene
     }
 
     /**
-    * Выполняет начальную подготовку сцены
+    * начальная подготовка сцены
     * @protected
-    * @returns {Scene} Возвращает this для цепочки вызовов
+    * @returns {Scene}
     */
     _prepare() {
         return this._prepareDesk()._prepareEvents();
     }
 
     /**
-    * Перерисовывает игровое поле на основе текущего состояния
+    * перерисовывает игровое поле на основе текущего состояния
+    *
     * @protected
-    * @returns {Scene} Возвращает this для цепочки вызовов
+    * @returns {Scene}
     */
     _redraw() {
         const cells = this.maze.getCells();
@@ -344,7 +347,8 @@ class Scene
     }
 
     /**
-    * Запускает выполнение игры с периодической перерисовкой
+    * запускает выполнение игры с периодической перерисовкой
+    *
     * @param {Object} data - Данные для инициализации игры
     * @param {number} [intv=100] - Интервал перерисовки в миллисекундах
     * @returns {number} Идентификатор интервала (interval ID)
@@ -357,22 +361,25 @@ class Scene
     }
 
     /**
-    * Завершает игру, показывая диалог завершения
-    * @returns {Scene} Возвращает this для цепочки вызовов
+    * завершает игру, показывая диалог завершения
+    *
+    * @returns {Scene}
     */
     finish() {
-        setTimeout(() => {
-            this.done();
-
-            this._getDocument().querySelector(this.el.dataset.finish)?.showModal();
-        }, 100);
+        setTimeout(
+            () => this.done()._getDocument()
+                .querySelector(this.el.dataset.finish)
+                ?.showModal()
+            , 100
+        );
 
         return this;
     }
 
     /**
-    * Останавливает выполнение игры (очищает интервал)
-    * @returns {Scene} Возвращает this для цепочки вызовов
+    * останавливает выполнение игры
+    *
+    * @returns {Scene}
     */
     done() {
         this._getWindow().clearInterval(this._int);
@@ -382,16 +389,16 @@ class Scene
 }
 
 /**
-* Класс, представляющий лабиринт
-* Генерирует и управляет структурой лабиринта, включая стены, проходы и специальные клетки.
+* лабиринт
 * @class
 */
 class Maze
 {
     /**
-    * Создает экземпляр лабиринта
+    * конструктор
+    *
     * @constructor
-    * @param {Scene} scene - Связанная сцена, для которой создается лабиринт
+    * @param {Scene} scene - связанная сцена
     */
     constructor(scene) {
         this.scene = scene;
@@ -399,18 +406,19 @@ class Maze
     }
 
     /**
-    * Получает данные лабиринта
-    * @returns {Array<Array<Object>>} Двумерный массив объектов клеток лабиринта
+    * данные лабиринта
+    *
+    * @returns {Array<Array<Object>>} массив объектов клеток лабиринта
     */
     getData() {
         return this.data;
     }
 
     /**
-    * Получает случайную свободную клетку (не стену) из лабиринта
-    * Использует вероятностный алгоритм для выбора случайной клетки
+    * случайная клетка коридора (не стены) из лабиринта
+    *
     * @param {number} prob - вероятность выбора
-    * @returns {Object} Объект случайной свободной клетки
+    * @returns {Object}
     */
     getHallRandom(prob = 0.998) {
         const hall = this.getHall();
@@ -422,10 +430,11 @@ class Maze
     }
 
     /**
-    * Генерирует исходные данные для лабиринта
-    * Создает двумерный массив клеток со случайными стенами
+    * исходные данные для лабиринта
+    * двумерный массив клеток со случайными стенами
+    *
     * @protected
-    * @returns {Array<Array<Object>>} Двумерный массив начальных данных лабиринта
+    * @returns {Array<Array<Object>>}
     */
     _generateData() {
         return Helper.getRange(this.scene.sizeY).map(
@@ -442,54 +451,56 @@ class Maze
     }
 
     /**
-    * Генерирует лабиринт на основе начальных данных
-    * Создает проходы, удаляя некоторые стены между компонентами связности.
+    * генерирует лабиринт на основе начальных данных
+    * удаляет некоторые стены между компонентами связности
+    *
     * @protected
     */
     _generate() {
         this.data = this._generateData();
-
-        const cells = this.data;
         const hall = this.getHall();
         const shift = this._getShift();
         const chunks = this.getHallChunks(hall, shift);
-        const borders = this._getBorders(hall, shift, cells);
+        const borders = this._getBorders(hall, shift, this.data);
 
         return this._getRemoveWall(chunks);
     }
 
     /**
-    * Получает конкретную клетку лабиринта по координатам
-    * @param {number} y - Y-координата клетки
-    * @param {number} x - X-координата клетки
-    * @returns {Object|null} Объект клетки или null, если не найдена
+    * клетка лабиринта по координатам
+    *
+    * @param {number} y
+    * @param {number} x
+    * @returns {Object|null}
     */
     getCell(y, x) {
         return this._getCell(this.getCells(), y, x);
     }
 
     /**
-    * Получает все клетки лабиринта в виде одномерного массива
-    * @returns {Array<Object>} Одномерный массив всех клеток лабиринта
+    * клетки лабиринта в виде одномерного массива
+    * @returns {Array<Object>}
     */
     getCells() {
         return this.getData().flat();
     }
 
     /**
-    * Вспомогательный метод для поиска клетки по координатам
+    * поиск клетки по координатам по даннному списку клеток
+    *
     * @protected
-    * @param {Array<Object>} cells - Массив клеток для поиска
-    * @param {number} y - Y-координата
-    * @param {number} x - X-координата
-    * @returns {Object|null} Найденная клетка или null
+    * @param {Array<Object>} cells - массив клеток для поиска
+    * @param {number} y
+    * @param {number} x
+    * @returns {Object|null} клетка
     */
     _getCell(cells, y, x) {
         return cells.flat().find(cell => (cell.y == y) && (cell.x == x));
     }
 
     /**
-    * Получает все свободные клетки (не стены) лабиринта
+    * все клетки коридора (не стены) лабиринта
+    *
     * @returns {Array<Object>} Массив свободных клеток
     */
     getHall() {
@@ -497,26 +508,29 @@ class Maze
     }
 
     /**
-    * Генерирует массив смещений для поиска соседних клеток
-    * Создает все возможные смещения в квадрате размера size × size, исключая диагонали
+    * массив смещений для поиска соседних клеток
+    * все возможные смещения в квадрате размера size × size, исключая диагонали
+    *
     * @protected
-    * @param {number} [size=3] - Размер области смещений (по умолчанию 3×3)
-    * @returns {Array<Array<number>>} Массив смещений [dy, dx]
+    * @param {number} [size=3] - размер области смещений (по умолчанию 3×3)
+    * @returns {Array<Array<number>>} массив смещений [dy, dx]
     */
     _getShift(size = 3) {
-        const _shift = size => [... Array(size).keys()].map(i => i - 1)
+        const shift = [... Array(size).keys()].map(i => i - 1);
 
-        return _shift(size)
-            .map(y => _shift(size).map(x => [y, x,]))
-            .flat().filter(cell => cell[0] != -cell[1]);
+        return shift
+            .map(y => shift.map(x => [y, x,]))
+            .flat()
+            .filter(cell => cell[0] != -cell[1]);
     }
 
     /**
-    * Разделяет свободные клетки на связные компоненты (chunks)
-    * Находит группы связанных свободных клеток с помощью обхода в ширину/глубину
-    * @param {Array<Object>} hall - Массив свободных клеток
-    * @param {Array<Array<number>>} shift - Массив смещений для поиска соседей
-    * @returns {Array<Array<Object>>} Массив связных компонентов (массивов клеток)
+    * разделяет свободные клетки на связные компоненты (chunks)
+    * находит группы связанных свободных клеток с помощью обхода в ширину/глубину
+    *
+    * @param {Array<Object>} hall - массив свободных клеток
+    * @param {Array<Array<number>>} shift - массив смещений для поиска соседей
+    * @returns {Array<Array<Object>>} массив связных компонентов (массивов клеток)
     */
     getHallChunks(hall, shift) {
         const self = this;
@@ -539,13 +553,14 @@ class Maze
     }
 
     /**
-    * Находит граничные стены вокруг свободных клеток
-    * Определяет, какие стены граничат со свободными клетками
+    * находит граничные стены вокруг свободных клеток
+    * определяет, какие стены граничат со свободными клетками
+    *
     * @protected
-    * @param {Array<Object>} hall - Массив свободных клеток
-    * @param {Array<Array<number>>} shift - Массив смещений для поиска соседей
-    * @param {Array<Array<Object>>} cells - Все клетки лабиринта
-    * @returns {Array<Object>} Массив граничных стен
+    * @param {Array<Object>} hall - массив свободных клеток
+    * @param {Array<Array<number>>} shift - массив смещений для поиска соседей
+    * @param {Array<Array<Object>>} cells - все клетки лабиринта
+    * @returns {Array<Object>} массив граничных стен
     */
     _getBorders(hall, shift, cells) {
         const self = this;
@@ -569,11 +584,12 @@ class Maze
     }
 
     /**
-    * Удаляет некоторые стены между связными компонентами, соединяя лабиринт
-    * Случайным образом выбирает граничные стены для удаления
+    * удаляет некоторые стены между связными компонентами, соединяя лабиринт
+    * случайным образом выбирает граничные стены для удаления
+    *
     * @protected
-    * @param {Array<Array<Object>>} chunks - Связные компоненты свободных клеток
-    * @returns {Array} Результат удаления стен
+    * @param {Array<Array<Object>>} chunks - связные компоненты свободных клеток
+    * @returns {Array} результат удаления стен
     */
     _getRemoveWall(chunks) {
         const self = this;

@@ -1,15 +1,15 @@
 (({"document": doc}) => {
     /**
-    * Обработчик события DOMContentLoaded.
+    * загрузка содержимого
     *
     * @listens DOMContentLoaded
-    * @param {Event} event - Событие загрузки DOM
-    * @param {Document} event.target - Загруженный документ
+    * @param {Event} event
+    * @param {Document} event.target
     */
     doc.addEventListener("DOMContentLoaded", ({"target": el}) => {
         /**
         * @type {[HTMLElement, HTMLFormElement]}
-        * @property {HTMLElement} mazeEl - DOM-элемент игрового поля (лабиринта)
+        * @property {HTMLElement} mazeEl - DOM-элемент лабиринта
         * @property {HTMLFormElement} formEl - DOM-элемент формы управления игрой
         */
         const [mazeEl, formEl] = el.querySelectors(".maze", ".controls");
@@ -21,7 +21,7 @@
 
         /**
         * @callback playGameCallback
-        * @param {SubmitEvent|CustomEvent} evt - Событие отправки формы или кастомное событие
+        * @param {SubmitEvent|CustomEvent} evt
         * @returns {void}
         */
         const playGame = evt => {
@@ -37,7 +37,7 @@
             */
             const formData = new FormData(formEl);
 
-            // Завершаем предыдущую игру, если она была
+            // завершаем предыдущую игру, если она была
             scene?.done();
             scene = new Scene(
                 mazeEl, 
