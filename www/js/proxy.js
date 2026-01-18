@@ -34,7 +34,7 @@ Node.prototype.querySelectors = function(...cssSelectors) {
 * @returns {Object} текущий объект (для цепочки вызовов)
 */
 Object.prototype.set = function(... datas) {
-    Object.assign(this, datas);
+    Object.assign(this, ... datas);
 
     return this;
 };
