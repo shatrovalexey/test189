@@ -538,23 +538,17 @@ class Maze
     */
     _getBorders(hall, shift, cells) {
         const self = this;
-        const borders = [];
 
-        hall.forEach(cell => {
-            cell.border = [];
+        return hall.map(cell => cell.border = shift.map(([y, x,]) => {
+            const cellCurrent = self._getCell(cells, cell.y + y, cell.x + x);
 
-            shift.forEach(([y, x,]) => {
-                const cellCurrent = self._getCell(cells, cell.y + y, cell.x + x);
+            if (!cellCurrent || !cellCurrent.wall || cellCurrent.border)
+                return null;
 
-                if (!cellCurrent || !cellCurrent.wall || cellCurrent.border) return;
+            cellCurrent.border = true;
 
-                cellCurrent.border = true;
-                cell.border.push(cellCurrent);
-                borders.push(cellCurrent);
-            });
-        });
-
-        return borders;
+            return cellCurrent;
+        }).filter(cell => cell)).flat();
     }
 
     /**
