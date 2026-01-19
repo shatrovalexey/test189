@@ -103,8 +103,42 @@ fieldset:has(.scores:empty) {
 .maze-cell.clone[data-enter="true"] {
     background-color: red;
 }
-label input[type="submit"] {
+.maze-cell[data-player="true"]:after {
+    content: "→";
+    color: red;
+    position: absolute;
+    z-index: 1000;
+    font-weight: bold;
+    width: 100px;
+    height: 100px;
+    font-size: 80px;
+    rotate: -45deg;
+    margin-left: -60px;
+}
+.controls-fields
+, .controls-fields ul
+, .controls-fields li {
+    list-style-type: none;
+    padding: 0;
+}
+.controls-fields li {
+    display: inline-block;
+}
+.controls-fields ul {
+    display: grid;
+    grid-template-columns: 1fr min-content 1fr;
+    column-gap: 5px;
+    justify-self: center;
+}
+.controls-fields {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+}
+input[type="submit"] {
     cursor: pointer;
+}
+input[type="number"] {
+    text-align: right;
 }
 @keyframes spin {
     from {
