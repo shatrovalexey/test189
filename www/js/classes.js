@@ -490,9 +490,11 @@ class Maze
     * @returns {Array<Array<number>>} массив смещений [dy, dx]
     */
     _getShift(size = 3) {
+        if (size in (this._shift ||= {})) return this._shift[size];
+
         const shift = [... Array(size).keys()].map(i => i - 1);
 
-        return shift
+        return this._shift[size] = shift
             .map(y => shift.map(x => [y, x,]))
             .flat()
             .filter(cell => cell[0] != -cell[1]);
